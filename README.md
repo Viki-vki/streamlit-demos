@@ -1,1 +1,1 @@
-# lyzr-demos.streamlit
+# streamlit-demos
