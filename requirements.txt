@@ -1,5 +1,5 @@
 streamlit
-lyzr
+lyzr=="0.1.23"
 streamlit_analytics
 pandas
 audio-recorder-streamlit
