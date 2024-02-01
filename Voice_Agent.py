@@ -1,5 +1,4 @@
 import streamlit as st
-from streamlit.logger import get_logger
 import os
 from audio_recorder_streamlit import audio_recorder
 from openai import OpenAI

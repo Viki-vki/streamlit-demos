@@ -1,6 +1,5 @@
 streamlit
 lyzr
-streamlit.logger
 stramlit_analytics
 pandas
 audio-recorder-streamlit
