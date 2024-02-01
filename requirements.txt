@@ -1,6 +1,6 @@
 streamlit
 lyzr
-stramlit_analytics
+streamlit_analytics
 pandas
 audio-recorder-streamlit
 ffmpeg
