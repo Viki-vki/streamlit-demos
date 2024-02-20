@@ -4,3 +4,4 @@ streamlit_analytics
 pandas
 audio-recorder-streamlit
 ffmpeg
+llmsherpa
