@@ -5,3 +5,6 @@ pandas
 audio-recorder-streamlit
 ffmpeg
 llmsherpa
+json
+openai
+PIL
