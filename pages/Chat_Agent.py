@@ -74,35 +74,9 @@ def is_valid_api_key(api_key):
     that consists of alphanumeric characters, optionally including hyphens and underscores."""
     return bool(re.match(r'^[a-zA-Z0-9\-_]{32,64}$', api_key))
 
-def pdf():
-    uploaded_files = st.file_uploader(
-        "Choose PDF files", type=["pdf"], accept_multiple_files=True
-    )
-    pdf_file_paths = []  # This will store paths to the saved files
-
-    if uploaded_files:
-        for uploaded_file in uploaded_files:
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmpfile:
-                tmpfile.write(uploaded_file.getvalue())
-                pdf_file_paths.append(tmpfile.name)
-
-        # Update session state with new PDF file paths
-        st.session_state.pdf_file_paths = pdf_file_paths
-
-        # Generate a unique index name based on the current timestamp
-        unique_index_name = f"IndexName_{int(time.time())}"
-        vector_store_params = {"index_name": unique_index_name}
-        st.session_state["chatbot"] = ChatBot.pdf_chat(
-            input_files=pdf_file_paths, vector_store_params=vector_store_params
-        )
-
-        # Inform the user that the files have been uploaded and processed
-        st.success("PDFs uploaded and processed. You can now interact with the chatbot.")
-
-
+def display_chat_interface():
     if "messages" not in st.session_state:
         st.session_state.messages = []
-
 
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
@@ -124,7 +98,29 @@ def pdf():
     else:
         st.warning("Please upload PDF files to continue.")
 
+def pdf():
+    uploaded_file = st.file_uploader("Choose a PDF file", type=["pdf"])
 
+    if uploaded_file:
+        # Reset chat history if new files are uploaded
+        st.session_state.messages = []
+
+        # Save the uploaded file temporarily
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmpfile:
+            tmpfile.write(uploaded_file.getvalue())
+            pdf_file_path = tmpfile.name
+
+        # Use the single PDF file path for ChatBot processing
+        unique_index_name = f"IndexName_{int(time.time())}"
+        vector_store_params = {"index_name": unique_index_name}
+        st.session_state["chatbot"] = ChatBot.pdf_chat(
+            input_files=[pdf_file_path], vector_store_params=vector_store_params
+        )
+
+        # Inform the user that the file has been uploaded and processed
+        st.success("PDF uploaded and processed. You can now interact with the chatbot.")
+
+    display_chat_interface()
 #Check if OpenAI API key is valid
 if openai_api_key:
     if is_valid_api_key(openai_api_key):
