@@ -10,7 +10,7 @@ import streamlit_analytics
 import pandas as pd
 from streamlit import session_state
 
-
+1
 # This is the path to the json file where you want to save the analytics
 analytics_filepath = "analytics.json"
 
